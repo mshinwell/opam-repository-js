@@ -1,0 +1,33 @@
+opam-version: "2.0"
+synopsis: "flambda2"
+license: "LGPL-2.1-or-later WITH OCaml-LGPL-linking-exception"
+authors: "Xavier Leroy and many contributors"
+homepage: "https://ocaml.org"
+bug-reports: "https://github.com/ocaml-flambda/flambda-backend/issues"
+dev-repo: "git+https://github.com/ocaml-flambda/flambda-backend#main"
+depends: [
+  "init-compiler"
+  "init-dune"
+  "init-menhir"
+  "ocaml" {= "5.1.1" & post}
+  "base-unix" {post}
+  "base-bigarray" {post}
+  "base-threads" {post}
+  "base-domains" {post}
+  "base-nnp" {post}
+  "ocaml-options-vanilla" {post}
+]
+conflict-class: "ocaml-core-compiler"
+flags: compiler
+setenv: CAML_LD_LIBRARY_PATH = "%{lib}%/stublibs"
+build: [
+  ["autoconf"]
+  ["./configure" "--enable-middle-end=flambda2" "--disable-naked-pointers" "--prefix=%{prefix}%" "--with-dune=%{prefix}%/init_deps/bin/dune"]
+  ["sh" "-exc" "PATH=%{prefix}%/init_deps/bin/:$PATH make -j%{jobs}%"]
+]
+install: [
+  "sh" "-exc" "PATH=%{prefix}%/init_deps/bin/:$PATH make install"
+]
+url {
+  src: "https://github.com/ocaml-flambda/flambda-backend/archive/main.tar.gz"
+}
