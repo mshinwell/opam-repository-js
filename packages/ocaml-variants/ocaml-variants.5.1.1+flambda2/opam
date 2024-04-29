@@ -22,7 +22,7 @@ flags: compiler
 setenv: CAML_LD_LIBRARY_PATH = "%{lib}%/stublibs"
 build: [
   ["autoconf"]
-  ["./configure" "--enable-middle-end=flambda2" "--disable-naked-pointers" "--prefix=%{prefix}%" "--with-dune=%{prefix}%/init_deps/bin/dune"]
+  ["./configure" "--prefix=%{prefix}%" "--with-dune=%{prefix}%/init_deps/bin/dune"]
   ["sh" "-exc" "PATH=%{prefix}%/init_deps/bin/:$PATH make -j%{jobs}%"]
 ]
 install: [
